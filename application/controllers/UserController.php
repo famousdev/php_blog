@@ -11,11 +11,9 @@ class UserController extends Controller
 		if (!empty($_POST)) {
 			if (!$this->model->validate(['email', 'login', 'password'], $_POST)) {
 				$this->view->message('error', $this->model->error);
-			}
-			elseif (!$this->model->checkEmailExists($_POST['email'])) {
+			} elseif (!$this->model->checkEmailExists($_POST['email'])) {
 				$this->view->message('error', $this->model->error);
-			}
-			elseif (!$this->model->checkLoginExists($_POST['login'])) {
+			} elseif (!$this->model->checkLoginExists($_POST['login'])) {
 				$this->view->message('error', $this->model->error);
 			}
 			$this->model->register($_POST);
@@ -24,7 +22,8 @@ class UserController extends Controller
 		$this->view->render('Регистрация');
 	}
 
-	public function confirmAction() {
+	public function confirmAction()
+	{
 		if (!$this->model->checkTokenExists($this->route['token'])) {
 			$this->view->redirect('user/login');
 		}
@@ -37,11 +36,9 @@ class UserController extends Controller
 		if (!empty($_POST)) {
 			if (!$this->model->validate(['login', 'password'], $_POST)) {
 				$this->view->message('error', $this->model->error);
-			}
-			elseif (!$this->model->checkData($_POST['login'], $_POST['password'])) {
+			} elseif (!$this->model->checkData($_POST['login'], $_POST['password'])) {
 				$this->view->message('error', 'Логин или пароль указан неверно');
-			}
-			elseif (!$this->model->checkStatus('login', $_POST['login'])) {
+			} elseif (!$this->model->checkStatus('login', $_POST['login'])) {
 				$this->view->message('error', $this->model->error);
 			}
 			$this->model->login($_POST['login']);
@@ -80,11 +77,9 @@ class UserController extends Controller
 		if (!empty($_POST)) {
 			if (!$this->model->validate(['email'], $_POST)) {
 				$this->view->message('error', $this->model->error);
-			}
-			elseif (!$this->model->checkEmailExists($_POST['email'])) {
+			} elseif (!$this->model->checkEmailExists($_POST['email'])) {
 				$this->view->message('error', 'Пользователь не найден');
-			}
-			elseif (!$this->model->checkStatus('email', $_POST['email'])) {
+			} elseif (!$this->model->checkStatus('email', $_POST['email'])) {
 				$this->view->message('error', $this->model->error);
 			}
 			$this->model->recovery($_POST);
@@ -93,7 +88,8 @@ class UserController extends Controller
 		$this->view->render('Восстановление пароля');
 	}
 
-	public function resetAction() {
+	public function resetAction()
+	{
 		if (!$this->model->checkTokenExists($this->route['token'])) {
 			$this->view->redirect('user/login');
 		}

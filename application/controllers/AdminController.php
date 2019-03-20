@@ -4,7 +4,6 @@ namespace application\controllers;
 
 use application\core\Controller;
 use application\lib\Pagination;
-use application\models\Main;
 use application\models\Post;
 
 class AdminController extends Controller
@@ -19,15 +18,14 @@ class AdminController extends Controller
 	public function loginAction()
 	{
 		if (isset($_SESSION['admin'])) {
-			$this->view->redirect('admin/add');
+			$this->view->redirect('admin/posts');
 		}
-		if (!empty($_POST))
-		{
+		if (!empty($_POST)) {
 			if (!$this->model->loginValidate($_POST)) {
 				$this->view->message('error', $this->model->error);
 			}
 			$_SESSION['admin'] = true;
-			$this->view->location('admin/add');
+			$this->view->location('admin/posts');
 		}
 		$this->view->render('Вход');
 	}
@@ -74,7 +72,7 @@ class AdminController extends Controller
 	public function deleteAction()
 	{
 		$postModel = new Post;
-		if(!$postModel->isPostExists($this->route['id'])) {
+		if (!$postModel->isPostExists($this->route['id'])) {
 			$this->view->errorCode(404);
 		}
 		$postModel->postDelete($this->route['id']);
@@ -89,11 +87,11 @@ class AdminController extends Controller
 
 	public function postsAction()
 	{
-		$mainModel = new Main;
-		$pagination = new Pagination($this->route, $mainModel->postsCount());
+		$postModel = new Post;
+		$pagination = new Pagination($this->route, $postModel->postsCount());
 		$vars = [
 			'pagination' => $pagination->get(),
-			'list' => $mainModel->postsList($this->route),
+			'list' => $postModel->postsList($this->route),
 		];
 		$this->view->render('Посты', $vars);
 	}

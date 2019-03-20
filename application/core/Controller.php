@@ -4,7 +4,8 @@ namespace application\core;
 
 use application\core\View;
 
-abstract class Controller {
+abstract class Controller
+{
 
 	public $route;
 	public $view;
@@ -23,7 +24,7 @@ abstract class Controller {
 
 	public function loadModel($name)
 	{
-		$path = 'application\models\\'.ucfirst($name);
+		$path = 'application\models\\' . ucfirst($name);
 		if (class_exists($path)) {
 			return new $path;
 		}
@@ -31,17 +32,14 @@ abstract class Controller {
 
 	public function checkAcl()
 	{
-		$this->acl = require 'application/acl/'.$this->route['controller'].'.php';
+		$this->acl = require 'application/acl/' . $this->route['controller'] . '.php';
 		if ($this->isAcl('all')) {
 			return true;
-		}
-		elseif (isset($_SESSION['user']['id']) and $this->isAcl('authorize')) {
+		} elseif (isset($_SESSION['user']['id']) and $this->isAcl('authorize')) {
 			return true;
-		}
-		elseif (!isset($_SESSION['user']['id']) and $this->isAcl('guest')) {
+		} elseif (!isset($_SESSION['user']['id']) and $this->isAcl('guest')) {
 			return true;
-		}
-		elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
+		} elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
 			return true;
 		}
 		return false;
@@ -51,5 +49,5 @@ abstract class Controller {
 	{
 		return in_array($this->route['action'], $this->acl[$key]);
 	}
-
 }
+

@@ -13,9 +13,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi rerum suscipit, 
-            voluptatibus accusantium obcaecati porro aperiam in sed. 
-            Temporibus vel accusantium optio atque quae. Aperiam nesciunt harum esse rerum totam.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi rerum suscipit,
+                voluptatibus accusantium obcaecati porro aperiam in sed.
+                Temporibus vel accusantium optio atque quae. Aperiam nesciunt harum esse rerum totam.</p>
         </div>
     </div>
-</div>
+</div> 

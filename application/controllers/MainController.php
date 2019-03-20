@@ -11,10 +11,11 @@ class MainController extends Controller
 
 	public function indexAction()
 	{
-		$pagination = new Pagination($this->route, $this->model->postsCount());
+		$postModel = new Post;
+		$pagination = new Pagination($this->route, $postModel->postsCount());
 		$vars = [
 			'pagination' => $pagination->get(),
-			'list' => $this->model->postsList($this->route),
+			'list' => $postModel->postsList($this->route),
 		];
 		$this->view->render('Главная страница', $vars);
 	}
@@ -30,7 +31,7 @@ class MainController extends Controller
 			if (!$this->model->contactValidate($_POST)) {
 				$this->view->message('error', $this->model->error);
 			}
-			mail('famouscossacks@gmail.com', 'Сообщение из блога', $_POST['name'].'|'.$_POST['email'].'|'.$_POST['text']);
+			mail('famouscossacks@gmail.com', 'Сообщение из блога', $_POST['name'] . '|' . $_POST['email'] . '|' . $_POST['text']);
 			$this->view->message('success', 'Сообщение отправлено Администратору');
 		}
 		$this->view->render('Контакты');
@@ -38,14 +39,13 @@ class MainController extends Controller
 
 	public function postAction()
 	{
-		$adminModel = new Post;
-		if (!$adminModel->isPostExists($this->route['id'])) {
+		$postModel = new Post;
+		if (!$postModel->isPostExists($this->route['id'])) {
 			$this->view->errorCode(404);
 		}
 		$vars = [
-			'data' => $adminModel->postData($this->route['id'])[0],
+			'data' => $postModel->postData($this->route['id'])[0],
 		];
 		$this->view->render('Пост', $vars);
 	}
-
 }
